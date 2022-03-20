@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,20 +25,16 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     private String targetUrl;
-    private String example = "https://api.openweathermap.org/data/2.5/weather?q=Odessa&units=metric&appid=9ad44b0c121776b58879fb126eea524a";
+    private final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=9ad44b0c121776b58879fb126eea524a";
     private EditText editTextCityOrZip;
-    TextView textViewCityName;
-    TextView textViewTemperature;
-    TextView textViewConditions;
+    private TextView textViewCityWeather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editTextCityOrZip = findViewById(R.id.editTextCityOrZip);
-        textViewCityName = findViewById(R.id.textViewCityName);
-        textViewTemperature = findViewById(R.id.textViewTemperature);
-        textViewConditions = findViewById(R.id.textViewConditions);
+        textViewCityWeather = findViewById(R.id.textViewCityWeather);
     }
 
     public void onClickGo(View view) {
@@ -68,17 +63,15 @@ public class MainActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(result);
             String name = jsonObject.getString("name");
 //                Log.i("Result", name);
-                textViewCityName.setText(name);
             JSONObject main = jsonObject.getJSONObject("main");
             String temp = main.getString("temp");
 //                Log.i("Result", "Temperature: " + temp);
-                textViewTemperature.setText("Temperature: " + temp);
             JSONArray jsonArray = jsonObject.getJSONArray("weather");
             JSONObject weather = jsonArray.getJSONObject(0);
             String mainStr = weather.getString("main");
             String descriptionStr = weather.getString("description");
 //                Log.i("Result", "Main: " + mainStr);
-                textViewConditions.setText(mainStr);
+            textViewCityWeather.setText(name + "\nTemperature: " + temp + "\n" + mainStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
