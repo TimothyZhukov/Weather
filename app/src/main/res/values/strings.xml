@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="hintInfo">Enter city name or zip code</string>
-    <string name="search">Search</string>
+    <string name="hintInfo">Enter city name or index</string>
+    <string name="show_weather">Show weather</string>
     <string name="toastAttention">Filled must be filled!</string>
 </resources>
